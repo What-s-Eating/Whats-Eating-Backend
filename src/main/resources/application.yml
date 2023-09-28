@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+---
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/${DB_NAME}
+    username: ${username}
+    password: ${password}
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      format_sql: true
+      use_sql_comments: true
+    open-in-view: true
+    show-sql: true
+
+  jwt:
+    secret: ${JWT_SECRET}
