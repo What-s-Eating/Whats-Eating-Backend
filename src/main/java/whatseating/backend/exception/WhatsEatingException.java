@@ -1,11 +1,18 @@
 package whatseating.backend.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WhatsEatingException extends RuntimeException {
-    private final ErrorCode errorCode;
+    private ErrorCode errorCode;
+
     private String detailMessage;
+
+    public WhatsEatingException(ErrorCode errorCode, String detailMessage) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+        this.detailMessage = detailMessage;
+    }
 }
