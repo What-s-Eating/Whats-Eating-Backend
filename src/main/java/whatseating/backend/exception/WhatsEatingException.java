@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CustomException extends RuntimeException {
+public class WhatsEatingException extends RuntimeException {
     private final ErrorCode errorCode;
+    private String detailMessage;
 }
