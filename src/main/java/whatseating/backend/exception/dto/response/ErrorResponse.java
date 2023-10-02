@@ -1,8 +1,9 @@
-package whatseating.backend.exception;
+package whatseating.backend.exception.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
+import whatseating.backend.exception.enums.ErrorCode;
 
 @Getter
 @Builder

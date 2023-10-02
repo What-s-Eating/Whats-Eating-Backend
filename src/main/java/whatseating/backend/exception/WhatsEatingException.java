@@ -2,6 +2,7 @@ package whatseating.backend.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import whatseating.backend.exception.enums.ErrorCode;
 
 @Getter
 @RequiredArgsConstructor

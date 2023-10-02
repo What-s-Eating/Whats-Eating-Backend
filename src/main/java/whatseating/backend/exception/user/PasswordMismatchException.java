@@ -1,6 +1,6 @@
 package whatseating.backend.exception.user;
 
-import whatseating.backend.exception.ErrorCode;
+import whatseating.backend.exception.enums.ErrorCode;
 import whatseating.backend.exception.WhatsEatingException;
 
 public class PasswordMismatchException extends WhatsEatingException {
