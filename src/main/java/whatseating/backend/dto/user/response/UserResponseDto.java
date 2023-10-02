@@ -5,6 +5,7 @@ import lombok.Getter;
 import whatseating.backend.domain.User;
 import whatseating.backend.domain.enums.Provider;
 import whatseating.backend.domain.enums.Role;
+import whatseating.backend.exception.user.UserNotFoundException;
 
 @Getter
 @Builder
@@ -17,6 +18,8 @@ public class UserResponseDto {
     private Role role;
 
     public static UserResponseDto of(User user) {
+        if (user == null) throw UserNotFoundException.EXCEPTION;
+
         return UserResponseDto.builder()
                 .id(user.getId())
                 .name(user.getName())
