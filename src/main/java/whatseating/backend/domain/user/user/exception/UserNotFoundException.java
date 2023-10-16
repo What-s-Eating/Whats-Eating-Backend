@@ -1,4 +1,4 @@
-package whatseating.backend.domain.user.exception;
+package whatseating.backend.domain.user.user.exception;
 
 import whatseating.backend.global.error.exception.ErrorCode;
 import whatseating.backend.global.error.exception.WhatsEatingException;

@@ -8,7 +8,8 @@ import whatseating.backend.global.error.exception.ErrorCode;
 @Getter
 @Builder
 public class ErrorResponse {
-    private final String error;
+//    private final String error;
+    private final int status;
     private final String code;
     private final String message;
 
@@ -16,7 +17,8 @@ public class ErrorResponse {
         return ResponseEntity
                 .status(errorCode.getStatus())
                 .body(ErrorResponse.builder()
-                        .error(errorCode.name())
+                        .status(errorCode.getStatus())
+                        .code(errorCode.getCode())
                         .message(errorCode.getMessage())
                         .build()
                 );
