@@ -84,11 +84,6 @@ public class JwtTokenProvider {
         return null;
     }
 
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(getEmail(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
     public String getEmail(String token) {
         return extractAllClaims(token).get("email", String.class);
     }
