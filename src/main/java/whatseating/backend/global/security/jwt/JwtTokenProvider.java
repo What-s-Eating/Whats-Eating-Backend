@@ -23,8 +23,6 @@ public class JwtTokenProvider {
     @Value("${spring.jwt.secret}")
     private String SECRET_KEY;
 
-    private final CustomUserDetailsService customUserDetailsService;
-
     // 객체 초기화, SECRET_KEY를 Base64로 인코딩
     @PostConstruct
     public void init() {
