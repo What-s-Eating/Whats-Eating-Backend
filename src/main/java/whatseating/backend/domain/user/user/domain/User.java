@@ -1,4 +1,4 @@
-package whatseating.backend.domain.user.domain;
+package whatseating.backend.domain.user.user.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -6,9 +6,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import whatseating.backend.domain.user.user.domain.enums.Provider;
+import whatseating.backend.domain.user.user.domain.enums.Role;
 import whatseating.backend.global.entity.BaseTimeEntity;
-import whatseating.backend.domain.user.domain.enums.Provider;
-import whatseating.backend.domain.user.domain.enums.Role;
 
 @Getter
 @Entity
@@ -31,7 +31,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
@@ -52,6 +52,13 @@ public class User extends BaseTimeEntity {
         this.role = role;
     }
 
+    public User update(String name, String profileImage) {
+        this.name = name;
+        this.profileImage = profileImage;
+
+        return this;
+    }
+
     public void updateName(String name) {
         this.name = name;
     }
@@ -62,5 +69,9 @@ public class User extends BaseTimeEntity {
 
     public void updateProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }

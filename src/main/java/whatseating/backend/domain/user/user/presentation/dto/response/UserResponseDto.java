@@ -1,11 +1,11 @@
-package whatseating.backend.domain.user.presentation.dto.response;
+package whatseating.backend.domain.user.user.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import whatseating.backend.domain.user.domain.User;
-import whatseating.backend.domain.user.domain.enums.Provider;
-import whatseating.backend.domain.user.domain.enums.Role;
-import whatseating.backend.domain.user.exception.UserNotFoundException;
+import whatseating.backend.domain.user.user.domain.User;
+import whatseating.backend.domain.user.user.domain.enums.Provider;
+import whatseating.backend.domain.user.user.domain.enums.Role;
+import whatseating.backend.domain.user.user.exception.UserNotFoundException;
 
 @Getter
 @Builder

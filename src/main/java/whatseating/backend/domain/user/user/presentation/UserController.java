@@ -1,26 +1,20 @@
-package whatseating.backend.domain.user.presentation;
+package whatseating.backend.domain.user.user.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import whatseating.backend.domain.user.domain.User;
-import whatseating.backend.domain.user.presentation.dto.request.CreateUserRequestDto;
-import whatseating.backend.domain.user.presentation.dto.request.DeleteUserRequestDto;
-import whatseating.backend.domain.user.presentation.dto.request.UpdateNameRequestDto;
-import whatseating.backend.domain.user.presentation.dto.request.UpdatePasswordRequestDto;
-import whatseating.backend.domain.user.presentation.dto.response.UserResponseDto;
-import whatseating.backend.domain.user.service.UserService;
+import whatseating.backend.domain.user.user.domain.User;
+import whatseating.backend.domain.user.user.presentation.dto.request.DeleteUserRequestDto;
+import whatseating.backend.domain.user.user.presentation.dto.request.UpdateNameRequestDto;
+import whatseating.backend.domain.user.user.presentation.dto.request.UpdatePasswordRequestDto;
+import whatseating.backend.domain.user.user.presentation.dto.response.UserResponseDto;
+import whatseating.backend.domain.user.user.service.UserService;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @PostMapping
-    public void createUser(@RequestBody @Valid CreateUserRequestDto dto) {
-        userService.createUser(dto);
-    }
 
     @DeleteMapping
     public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, @RequestAttribute User user) {
