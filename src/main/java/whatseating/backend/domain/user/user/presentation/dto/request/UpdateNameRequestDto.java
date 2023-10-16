@@ -1,4 +1,4 @@
-package whatseating.backend.domain.user.presentation.dto.request;
+package whatseating.backend.domain.user.user.presentation.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

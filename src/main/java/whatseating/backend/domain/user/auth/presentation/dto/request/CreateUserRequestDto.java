@@ -1,12 +1,14 @@
-package whatseating.backend.domain.user.presentation.dto.request;
+package whatseating.backend.domain.user.auth.presentation.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import whatseating.backend.domain.user.domain.User;
-import whatseating.backend.domain.user.domain.enums.Role;
+import whatseating.backend.domain.user.user.domain.User;
+import whatseating.backend.domain.user.user.domain.enums.Provider;
+import whatseating.backend.domain.user.user.domain.enums.Role;
 
 @Getter
 @AllArgsConstructor
@@ -20,6 +22,8 @@ public class CreateUserRequestDto {
     private String email;
 
     @NotNull(message = "비밀번호를 입력해 주세요.")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,30}$",
+            message = "비밀번호는 8~30 자리이면서 1개 이상의 알파벳, 숫자, 특수문자를 포함해야합니다.")
     private String password;
 
     public User toEntity(String password) {
@@ -28,6 +32,7 @@ public class CreateUserRequestDto {
                 .email(email)
                 .password(password)
                 .role(Role.USER)
+                .provider(Provider.LOCAL)
                 .build();
     }
 }
