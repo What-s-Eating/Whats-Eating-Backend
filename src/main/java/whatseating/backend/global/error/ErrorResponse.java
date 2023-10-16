@@ -8,7 +8,6 @@ import whatseating.backend.global.error.exception.ErrorCode;
 @Getter
 @Builder
 public class ErrorResponse {
-//    private final String error;
     private final int status;
     private final String code;
     private final String message;
