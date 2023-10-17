@@ -3,6 +3,7 @@ package whatseating.backend.global.security.dto;
 import lombok.Builder;
 import lombok.Getter;
 import whatseating.backend.domain.user.user.domain.User;
+import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 
 import java.util.Map;
@@ -14,14 +15,16 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String profileImage;
+    private Provider provider;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profileImage) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profileImage, Provider provider) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;
+        this.provider = provider;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
@@ -42,6 +45,7 @@ public class OAuthAttributes {
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileImage((String) attributes.get("picture"))
+                .provider(Provider.GOOGLE)
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -54,6 +58,7 @@ public class OAuthAttributes {
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .profileImage((String) response.get("profile_image"))
+                .provider(Provider.NAVER)
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -63,9 +68,10 @@ public class OAuthAttributes {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuthAttributes.builder()
-                .name((String) response.get("name"))
-                .email((String) response.get("email"))
+                .name((String) response.get("profile_nickname"))
+                .email((String) response.get("account_email"))
                 .profileImage((String) response.get("profile_image"))
+                .provider(Provider.KAKAO)
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -76,6 +82,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .profileImage(profileImage)
+                .provider(provider)
                 .role(Role.USER)
                 .build();
     }
