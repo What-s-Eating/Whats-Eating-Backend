@@ -10,14 +10,18 @@ import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 import whatseating.backend.global.entity.BaseTimeEntity;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "user")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     private Long id;
+
+    @Column
+    private String socialId;
 
     @Size(min = 2, max = 20)
     @Column(nullable = false)
