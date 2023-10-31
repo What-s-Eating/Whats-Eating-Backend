@@ -24,8 +24,22 @@ public class AuthController {
         return authService.login(dto);
     }
 
+    // TODO: 구글 콜백 로직
+
+
+    // TODO: 카카오 콜백 로직
+    @GetMapping("/kakao")
+    public void kakaoCallback(@RequestParam String code) {
+        System.out.println(code);
+    }
+
+    // TODO: 네이버 콜백 로직
+
+
+    // TODO: 로그아웃
+
     @PutMapping("/refresh")
-    public TokenResponseDto refreshToken(@RequestParam String refreshToken) {
-        return authService.refreshToken(refreshToken);
+    public TokenResponseDto reissueAccessToken(@RequestHeader(value = "Refresh-Token") String refreshToken) {
+        return authService.reissueAccessToken(refreshToken);
     }
 }

@@ -11,7 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 import whatseating.backend.global.security.jwt.JwtTokenProvider;
 import whatseating.backend.global.security.user.CustomUserDetails;
-import whatseating.backend.global.security.user.CustomUserDetailsService;
+import whatseating.backend.global.security.service.CustomUserDetailsService;
+
 
 import java.io.IOException;
 

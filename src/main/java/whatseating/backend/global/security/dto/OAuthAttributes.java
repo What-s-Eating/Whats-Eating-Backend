@@ -65,14 +65,15 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
         return OAuthAttributes.builder()
-                .name((String) response.get("profile_nickname"))
-                .email((String) response.get("account_email"))
-                .profileImage((String) response.get("profile_image"))
+                .name((String) kakaoProfile.get("nickname"))
+                .email((String) kakaoAccount.get("email"))
+                .profileImage((String) kakaoProfile.get("profile_image_url"))
                 .provider(Provider.KAKAO)
-                .attributes(response)
+                .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }

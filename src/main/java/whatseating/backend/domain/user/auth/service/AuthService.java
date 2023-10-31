@@ -13,6 +13,7 @@ import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.DuplicatedUserEmailException;
 import whatseating.backend.domain.user.user.exception.PasswordMismatchException;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
+import whatseating.backend.global.security.dto.OAuthAttributes;
 import whatseating.backend.global.security.jwt.JwtTokenProvider;
 
 @Service
@@ -52,10 +53,21 @@ public class AuthService {
                 .build();
     }
 
-    // TODO: Logout
+    // TODO: 구글 콜백 로직
+
+
+    // TODO: 카카오 콜백 로직
+    public void kakaoCallback(String code) {
+
+    }
+
+    // TODO: 네이버 콜백 로직
+
+
+    // TODO: 로그아웃
 
     @Transactional
-    public TokenResponseDto refreshToken(String refreshToken) {
+    public TokenResponseDto reissueAccessToken(String refreshToken) {
         if (!jwtTokenProvider.validateToken(refreshToken)) {
             throw InvalidTokenException.EXCEPTION;
         }
@@ -63,11 +75,8 @@ public class AuthService {
         User user = userRepository.findByEmail(jwtTokenProvider.getEmail(refreshToken))
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-
         return TokenResponseDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+                .accessToken(jwtTokenProvider.createAccessToken(user))
                 .build();
     }
 }

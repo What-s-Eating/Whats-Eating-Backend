@@ -4,15 +4,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import whatseating.backend.domain.user.user.domain.User;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
     private final User user;
+    private Map<String, Object> attributes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -20,8 +23,18 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
     public String getUsername() {
         return user.getEmail();
+    }
+
+    @Override
+    public String getName() {
+        return user.getName();
     }
 
     @Override

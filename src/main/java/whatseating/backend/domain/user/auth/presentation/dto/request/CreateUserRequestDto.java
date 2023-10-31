@@ -32,7 +32,7 @@ public class CreateUserRequestDto {
                 .email(email)
                 .password(password)
                 .role(Role.USER)
-                .provider(Provider.LOCAL)
+                .provider(Provider.EMAIL)
                 .build();
     }
 }

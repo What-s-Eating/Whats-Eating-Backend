@@ -5,14 +5,10 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.global.security.jwt.exception.ExpiredTokenException;
 import whatseating.backend.global.security.jwt.exception.InvalidTokenException;
-import whatseating.backend.global.security.user.CustomUserDetailsService;
 
 import java.util.Base64;
 import java.util.Date;

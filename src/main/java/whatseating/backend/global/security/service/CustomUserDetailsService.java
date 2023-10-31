@@ -1,4 +1,4 @@
-package whatseating.backend.global.security.user;
+package whatseating.backend.global.security.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
+import whatseating.backend.global.security.user.CustomUserDetails;
 
 @Service
 @RequiredArgsConstructor
