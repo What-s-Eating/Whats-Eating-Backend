@@ -11,16 +11,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import whatseating.backend.global.security.handler.OAuth2SuccessHandler;
 import whatseating.backend.global.security.jwt.JwtTokenProvider;
 import whatseating.backend.global.security.jwt.filter.JwtAuthenticationFilter;
-import whatseating.backend.global.security.user.CustomUserDetailsService;
+import whatseating.backend.global.security.service.CustomOAuth2UserService;
+import whatseating.backend.global.security.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
+    private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomUserDetailsService customUserDetailsService;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,9 +45,14 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .anyRequest().authenticated())
-                .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/"))
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OAuth2SuccessHandler(jwtTokenProvider))
+                        .authorizationEndpoint(authorization -> authorization
+                                .baseUri("/auth/**"))
+                        .redirectionEndpoint(redirection -> redirection
+                                .baseUri("/auth/**/callback"))
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
                         UsernamePasswordAuthenticationFilter.class);
         return http.build();
