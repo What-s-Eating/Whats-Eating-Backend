@@ -21,6 +21,7 @@ public class UserController {
         userService.deleteUser(dto, user);
     }
 
+    // TODO: 유저 정보 가져오기
     @GetMapping("/me")
     public UserResponseDto getUserInfo(@RequestAttribute User user) {
         return userService.getUserInfo(user);
