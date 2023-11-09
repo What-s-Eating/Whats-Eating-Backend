@@ -29,6 +29,8 @@ public class Restaurants {
     @Column(nullable = false)
     private String mainCategory;
 
+    private String menu;
+
     private String phone;
 
     private String time;
@@ -51,10 +53,11 @@ public class Restaurants {
     private List<Comments> comments = new ArrayList<Comments>();
 
     @Builder
-    public Restaurants(double latitude, double longitude, String mainCategory, String phone, String time, String star, String comment, String placeName, String address, String homepageUrl, String imgUrl) {
+    public Restaurants(double latitude, double longitude, String mainCategory, String menu, String phone, String time, String star, String comment, String placeName, String address, String homepageUrl, String imgUrl) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.mainCategory = mainCategory;
+        this.menu = menu;
         this.phone = phone;
         this.time = time;
         this.star = star;
