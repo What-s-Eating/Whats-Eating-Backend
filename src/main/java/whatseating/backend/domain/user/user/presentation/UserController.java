@@ -9,6 +9,7 @@ import whatseating.backend.domain.user.user.presentation.dto.request.UpdateNameR
 import whatseating.backend.domain.user.user.presentation.dto.request.UpdatePasswordRequestDto;
 import whatseating.backend.domain.user.user.presentation.dto.response.UserResponseDto;
 import whatseating.backend.domain.user.user.service.UserService;
+import whatseating.backend.global.config.resolver.UserId;
 
 @RestController
 @RequestMapping("/user")
@@ -17,28 +18,27 @@ public class UserController {
     private final UserService userService;
 
     @DeleteMapping
-    public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, @RequestAttribute User user) {
+    public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, User user) {
         userService.deleteUser(dto, user);
     }
 
-    // TODO: 유저 정보 가져오기
     @GetMapping("/me")
-    public UserResponseDto getUserInfo(@RequestAttribute User user) {
-        return userService.getUserInfo(user);
+    public UserResponseDto getUserInfo(@UserId Long id) {
+        return userService.getUserInfo(id);
     }
 
     @PutMapping("/name")
-    public void updateUserName(@RequestBody @Valid UpdateNameRequestDto dto, @RequestAttribute User user) {
+    public void updateUserName(@RequestBody @Valid UpdateNameRequestDto dto, User user) {
         userService.updateUserName(dto, user);
     }
 
     @PutMapping("/password")
-    public void updateUserPassword(@RequestBody @Valid UpdatePasswordRequestDto dto, @RequestAttribute User user) {
+    public void updateUserPassword(@RequestBody @Valid UpdatePasswordRequestDto dto, User user) {
         userService.updateUserPassword(dto, user);
     }
 
     @PutMapping("/profile-img")
-    public void updateUserProfileImg(@RequestParam String profileImage, @RequestAttribute User user) {
+    public void updateUserProfileImg(@RequestParam String profileImage, User user) {
         userService.updateUserProfileImage(profileImage, user);
     }
 }

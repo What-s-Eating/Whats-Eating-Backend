@@ -17,7 +17,7 @@ import whatseating.backend.global.entity.BaseTimeEntity;
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Long id;
 
     @Column
@@ -47,7 +47,9 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public User(String name, String email, String password, String profileImage, Provider provider, Role role) {
+    public User(Long id, String socialId, String name, String email, String password, String profileImage, Provider provider, Role role) {
+        this.id = id;
+        this.socialId = socialId;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -73,9 +75,5 @@ public class User extends BaseTimeEntity {
 
     public void updateProfileImage(String profileImage) {
         this.profileImage = profileImage;
-    }
-
-    public String getRoleKey() {
-        return this.role.getKey();
     }
 }

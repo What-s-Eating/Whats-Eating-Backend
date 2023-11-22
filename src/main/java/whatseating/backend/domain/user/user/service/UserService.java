@@ -1,13 +1,14 @@
 package whatseating.backend.domain.user.user.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.DuplicatedUserNameException;
 import whatseating.backend.domain.user.user.exception.PasswordMismatchException;
+import whatseating.backend.domain.user.user.exception.UserNotFoundException;
 import whatseating.backend.domain.user.user.presentation.dto.request.DeleteUserRequestDto;
 import whatseating.backend.domain.user.user.presentation.dto.request.UpdateNameRequestDto;
 import whatseating.backend.domain.user.user.presentation.dto.request.UpdatePasswordRequestDto;
@@ -17,7 +18,8 @@ import whatseating.backend.domain.user.user.presentation.dto.response.UserRespon
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public void deleteUser(DeleteUserRequestDto dto, User user) {
@@ -28,9 +30,11 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    // TODO: 유저 정보 가져오기
     @Transactional(readOnly = true)
-    public UserResponseDto getUserInfo(User user) {
+    public UserResponseDto getUserInfo(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
         return UserResponseDto.of(user);
     }
 
