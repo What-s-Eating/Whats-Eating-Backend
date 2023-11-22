@@ -1,7 +1,6 @@
 package whatseating.backend.domain.user.auth.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import whatseating.backend.domain.user.auth.exception.InvalidTokenException;
@@ -13,8 +12,8 @@ import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.DuplicatedUserEmailException;
 import whatseating.backend.domain.user.user.exception.PasswordMismatchException;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
-import whatseating.backend.global.security.dto.OAuthAttributes;
 import whatseating.backend.global.security.jwt.JwtTokenProvider;
+import whatseating.backend.global.config.auth.PasswordEncoder;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +31,7 @@ public class AuthService {
             throw DuplicatedUserEmailException.EXCEPTION;
         }
 
-        userRepository.save(dto.toEntity(passwordEncoder.encode(dto.getPassword())));
+        userRepository.save(dto.toEntity(passwordEncoder.encodePassword().encode(dto.getPassword())));
     }
 
     @Transactional
@@ -40,7 +39,7 @@ public class AuthService {
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.encodePassword().matches(dto.getPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
 
@@ -52,17 +51,6 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .build();
     }
-
-    // TODO: 구글 콜백 로직
-
-
-    // TODO: 카카오 콜백 로직
-    public void kakaoCallback(String code) {
-
-    }
-
-    // TODO: 네이버 콜백 로직
-
 
     // TODO: 로그아웃
 

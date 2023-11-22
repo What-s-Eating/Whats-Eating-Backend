@@ -18,6 +18,9 @@ public enum ErrorCode {
     // Auth
     TOKEN_INVALID(401, "TOKEN-001", "유효하지 않은 토큰입니다."),
     TOKEN_EXPIRED(401, "TOKEN-002", "만료된 토큰입니다."),
+
+    // Restaurants
+    RESTAURANTS_NOT_FOUND(404, "RESTAURANTS-001", "식당을 찾을 수 없습니다.")
     ;
 
     private final int status;
