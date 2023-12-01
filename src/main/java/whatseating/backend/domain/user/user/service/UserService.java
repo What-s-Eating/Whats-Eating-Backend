@@ -14,6 +14,8 @@ import whatseating.backend.domain.user.user.presentation.dto.request.UpdateNameR
 import whatseating.backend.domain.user.user.presentation.dto.request.UpdatePasswordRequestDto;
 import whatseating.backend.domain.user.user.presentation.dto.response.UserResponseDto;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -22,7 +24,10 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public void deleteUser(DeleteUserRequestDto dto, User user) {
+    public void deleteUser(DeleteUserRequestDto dto, UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
@@ -31,7 +36,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponseDto getUserInfo(Long id) {
+    public UserResponseDto getUserInfo(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
@@ -39,7 +44,10 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserName(UpdateNameRequestDto dto, User user) {
+    public void updateUserName(UpdateNameRequestDto dto, UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
         if (userRepository.findByName(dto.getName()).isPresent()) {
             throw DuplicatedUserNameException.EXCEPTION;
         }
@@ -49,7 +57,10 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserPassword(UpdatePasswordRequestDto dto, User user) {
+    public void updateUserPassword(UpdatePasswordRequestDto dto, UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
         if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
@@ -59,7 +70,11 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserProfileImage(String profileImage, User user) {
+    public void updateUserProfileImage(String profileImage, UUID id) {
+        // TODO: 나중에 S3로 변경
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
         user.updateProfileImage(profileImage);
         userRepository.save(user);
     }
