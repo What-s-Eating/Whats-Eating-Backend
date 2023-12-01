@@ -10,10 +10,13 @@ import whatseating.backend.domain.user.auth.presentation.dto.response.TokenRespo
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.DuplicatedUserEmailException;
+import whatseating.backend.domain.user.user.exception.DuplicatedUserNameException;
 import whatseating.backend.domain.user.user.exception.PasswordMismatchException;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
 import whatseating.backend.global.security.jwt.JwtTokenProvider;
 import whatseating.backend.global.config.auth.PasswordEncoder;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +31,7 @@ public class AuthService {
             throw DuplicatedUserEmailException.EXCEPTION;
         }
         if (userRepository.findByName(dto.getName()).isPresent()) {
-            throw DuplicatedUserEmailException.EXCEPTION;
+            throw DuplicatedUserNameException.EXCEPTION;
         }
 
         userRepository.save(dto.toEntity(passwordEncoder.encodePassword().encode(dto.getPassword())));
@@ -63,8 +66,12 @@ public class AuthService {
         User user = userRepository.findByEmail(jwtTokenProvider.getEmail(refreshToken))
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
+        String newAccessToken = jwtTokenProvider.createAccessToken(user);
+        String newRefreshToken = jwtTokenProvider.createRefreshToken(user);
+
         return TokenResponseDto.builder()
-                .accessToken(jwtTokenProvider.createAccessToken(user))
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
                 .build();
     }
 }
