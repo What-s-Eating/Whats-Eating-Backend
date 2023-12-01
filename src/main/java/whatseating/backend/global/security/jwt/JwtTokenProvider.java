@@ -12,6 +12,7 @@ import whatseating.backend.global.security.jwt.exception.InvalidTokenException;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -85,5 +86,10 @@ public class JwtTokenProvider {
     public String getId(String token) {
         return String.valueOf(extractAllClaims(token)
                 .get("userId", Long.class));
+    }
+
+    public UUID getUUID(String token) {
+        return UUID.fromString(extractAllClaims(token)
+                .get("userId", String.class));
     }
 }

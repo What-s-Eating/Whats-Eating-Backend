@@ -12,6 +12,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import whatseating.backend.global.security.jwt.JwtTokenProvider;
 import whatseating.backend.global.security.jwt.exception.InvalidTokenException;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
@@ -19,7 +21,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(UserId.class) && Long.class.equals(parameter.getParameterType());
+        return parameter.hasParameterAnnotation(UserId.class) && UUID.class.equals(parameter.getParameterType());
     }
 
     @Override
@@ -31,10 +33,10 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
             throw InvalidTokenException.EXCEPTION;
         }
 
-        final String userId = jwtTokenProvider.getId(token);
+        final UUID userId = jwtTokenProvider.getUUID(token);
 
         try {
-            return Long.parseLong(userId);
+            return userId;
         } catch (NumberFormatException e) {
             throw InvalidTokenException.EXCEPTION;
         }
