@@ -7,10 +7,12 @@ import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 public class UserResponseDto {
-    private Long id;
+    private UUID id;
     private String name;
     private String email;
     private String profileImage;
