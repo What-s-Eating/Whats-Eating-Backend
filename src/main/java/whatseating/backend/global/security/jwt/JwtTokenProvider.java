@@ -83,11 +83,6 @@ public class JwtTokenProvider {
         return extractAllClaims(token).get("email", String.class);
     }
 
-    public String getId(String token) {
-        return String.valueOf(extractAllClaims(token)
-                .get("userId", Long.class));
-    }
-
     public UUID getUUID(String token) {
         return UUID.fromString(extractAllClaims(token)
                 .get("userId", String.class));
