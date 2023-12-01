@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -15,15 +16,15 @@ import java.util.List;
 @Table(name = "restaurants")
 public class Restaurants {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @Column(name = "restaurants_id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @Column(nullable = false)
-    private double latitude;
+    private String latitude;
 
     @Column(nullable = false)
-    private double longitude;
+    private String longitude;
 
     // ex) 카페, 음식점
     @Column(nullable = false)
@@ -37,8 +38,6 @@ public class Restaurants {
 
     private String star;
 
-    private String comment;
-
     // ex) 홍대점
     @Column(nullable = false)
     private String placeName;
@@ -49,11 +48,11 @@ public class Restaurants {
     private String homepageUrl;
     private String imgUrl;
 
-    @OneToMany(mappedBy = "comments")
-    private List<Comments> comments = new ArrayList<Comments>();
+    @OneToMany(mappedBy = "restaurants")
+    private List<Review> review = new ArrayList<Review>();
 
     @Builder
-    public Restaurants(double latitude, double longitude, String mainCategory, String menu, String phone, String time, String star, String comment, String placeName, String address, String homepageUrl, String imgUrl) {
+    public Restaurants(String latitude, String longitude, String mainCategory, String menu, String phone, String time, String star, String placeName, String address, String homepageUrl, String imgUrl) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.mainCategory = mainCategory;
@@ -61,7 +60,6 @@ public class Restaurants {
         this.phone = phone;
         this.time = time;
         this.star = star;
-        this.comment = comment;
         this.placeName = placeName;
         this.address = address;
         this.homepageUrl = homepageUrl;

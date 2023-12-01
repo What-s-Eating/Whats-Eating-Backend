@@ -10,18 +10,17 @@ import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 import whatseating.backend.global.entity.BaseTimeEntity;
 
+import java.util.UUID;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "user")
 public class User extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
-
-    @Column
-    private String socialId;
+    @GeneratedValue(generator = "uuid2")
+    @Column(name = "user_id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @Size(min = 2, max = 20)
     @Column(nullable = false)
@@ -47,22 +46,14 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public User(Long id, String socialId, String name, String email, String password, String profileImage, Provider provider, Role role) {
+    public User(UUID id, String name, String email, String password, String profileImage, Provider provider, Role role) {
         this.id = id;
-        this.socialId = socialId;
         this.name = name;
         this.email = email;
         this.password = password;
         this.profileImage = profileImage;
         this.provider = provider;
         this.role = role;
-    }
-
-    public User update(String name, String profileImage) {
-        this.name = name;
-        this.profileImage = profileImage;
-
-        return this;
     }
 
     public void updateName(String name) {

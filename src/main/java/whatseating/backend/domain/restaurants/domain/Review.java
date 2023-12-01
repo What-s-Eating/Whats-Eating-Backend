@@ -8,35 +8,33 @@ import lombok.NoArgsConstructor;
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.global.entity.BaseTimeEntity;
 
+import java.util.UUID;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "comments")
-public class Comments extends BaseTimeEntity {
+@Table(name = "review")
+public class Review extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @Column(name = "review_id", columnDefinition = "BINARY(16)")
+    private UUID id;
+
+    @Column(nullable = false)
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="restaurants_id")
     private Restaurants restaurants;
 
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
-    private String star;
-
     @Builder
-    public Comments(User user, Restaurants restaurants, String content, String star) {
+    public Review(String content, User user, Restaurants restaurants) {
+        this.content = content;
         this.user = user;
         this.restaurants = restaurants;
-        this.content = content;
-        this.star = star;
     }
 }
