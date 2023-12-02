@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class WhatsEatingException extends RuntimeException {
     private ErrorCode errorCode;
 
-
     private String detailMessage;
 
     public WhatsEatingException(ErrorCode errorCode, String detailMessage) {
