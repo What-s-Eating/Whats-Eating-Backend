@@ -13,10 +13,8 @@ import whatseating.backend.domain.user.user.exception.DuplicatedUserEmailExcepti
 import whatseating.backend.domain.user.user.exception.DuplicatedUserNameException;
 import whatseating.backend.domain.user.user.exception.PasswordMismatchException;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
-import whatseating.backend.global.security.jwt.JwtTokenProvider;
 import whatseating.backend.global.config.auth.PasswordEncoder;
-
-import java.util.UUID;
+import whatseating.backend.global.security.jwt.JwtTokenProvider;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +25,11 @@ public class AuthService {
 
     @Transactional
     public void signUp(CreateUserRequestDto dto) {
+        // 이메일 중복 확인
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw DuplicatedUserEmailException.EXCEPTION;
         }
+        // 이름 중복 확인
         if (userRepository.findByName(dto.getName()).isPresent()) {
             throw DuplicatedUserNameException.EXCEPTION;
         }
@@ -42,6 +42,7 @@ public class AuthService {
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
+        // 비밀번호 일치 여부 확인
         if (!passwordEncoder.encodePassword().matches(dto.getPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
@@ -59,6 +60,7 @@ public class AuthService {
 
     @Transactional
     public TokenResponseDto reissueAccessToken(String refreshToken) {
+        // 리프레시 토큰 유효성 검사
         if (!jwtTokenProvider.validateToken(refreshToken)) {
             throw InvalidTokenException.EXCEPTION;
         }

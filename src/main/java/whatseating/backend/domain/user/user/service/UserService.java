@@ -28,6 +28,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
+        // 비밀번호 일치 여부 확인
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
@@ -48,6 +49,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
+        // 이름 중복 확인
         if (userRepository.findByName(dto.getName()).isPresent()) {
             throw DuplicatedUserNameException.EXCEPTION;
         }
@@ -61,6 +63,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
+        // 비밀번호 일치 여부 확인
         if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
             throw PasswordMismatchException.EXCEPTION;
         }
