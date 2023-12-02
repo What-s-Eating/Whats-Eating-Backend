@@ -18,11 +18,6 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
-    @DeleteMapping
-    public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, @UserId UUID id) {
-        userService.deleteUser(dto, id);
-    }
-
     @GetMapping("/me")
     public UserResponseDto getUserInfo(@UserId UUID id) {
         return userService.getUserInfo(id);
@@ -41,5 +36,10 @@ public class UserController {
     @PutMapping("/profile-img")
     public void updateUserProfileImg(@RequestParam String profileImage, @UserId UUID id) {
         userService.updateUserProfileImage(profileImage, id);
+    }
+
+    @DeleteMapping
+    public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, @UserId UUID id) {
+        userService.deleteUser(dto, id);
     }
 }

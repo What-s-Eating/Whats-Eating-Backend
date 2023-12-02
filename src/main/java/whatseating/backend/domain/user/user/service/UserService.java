@@ -23,19 +23,6 @@ public class UserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @Transactional
-    public void deleteUser(DeleteUserRequestDto dto, UUID id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
-
-        // 비밀번호 일치 여부 확인
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw PasswordMismatchException.EXCEPTION;
-        }
-
-        userRepository.delete(user);
-    }
-
     @Transactional(readOnly = true)
     public UserResponseDto getUserInfo(UUID id) {
         User user = userRepository.findById(id)
@@ -80,5 +67,18 @@ public class UserService {
 
         user.updateProfileImage(profileImage);
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(DeleteUserRequestDto dto, UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
+        // 비밀번호 일치 여부 확인
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw PasswordMismatchException.EXCEPTION;
+        }
+
+        userRepository.delete(user);
     }
 }
