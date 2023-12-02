@@ -13,6 +13,6 @@ import java.util.UUID;
 public interface RestaurantsRepository extends JpaRepository<Restaurants, UUID> {
     Optional<Restaurants> findById(UUID id);
 
-    List<Restaurants> findNearbyRestaurants(@Param("latitude") String latitude,
-                                            @Param("longitude") String longitude);
+    List<Restaurants> findByLatitudeAndLongitude(@Param("latitude") String latitude,
+                                                 @Param("longitude") String longitude);
 }

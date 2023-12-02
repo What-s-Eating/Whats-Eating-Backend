@@ -29,14 +29,14 @@ public class RestaurantsService {
 
     @Transactional(readOnly = true)
     public List<RestaurantsResponseDto> getNearbyRestaurants(String latitude, String longitude) {
-        List<Restaurants> restaurantsList = restaurantsRepository.findNearbyRestaurants(latitude, longitude);
+        List<Restaurants> nearbyRestaurants = restaurantsRepository.findByLatitudeAndLongitude(latitude, longitude);
 
         // 근처 음식점이 없을 경우
-        if (restaurantsList.isEmpty()) {
+        if (nearbyRestaurants.isEmpty()) {
             throw RestaurantsNotFoundException.EXCEPTION;
         }
 
-        return RestaurantsResponseDto.of(restaurantsList);
+        return RestaurantsResponseDto.of(nearbyRestaurants);
     }
 
     @Transactional(readOnly = true)
@@ -49,21 +49,21 @@ public class RestaurantsService {
 
     @Transactional(readOnly = true)
     public List<ReviewResponseDto> getReviews(UUID id, int page) {
-        List<Review> reviews = reviewRepository.findReviewByRestaurantsId(id);
+        List<Review> reviewsList = reviewRepository.findReviewByRestaurantsId(id);
 
         // 리뷰가 없을 경우
-        if (reviews.isEmpty()) {
+        if (reviewsList.isEmpty()) {
             throw ReviewNotFoundException.EXCEPTION;
         }
 
         // 페이징
         int pageSize = 10;
         int start = (page - 1) * pageSize;
-        int end = Math.min(start + pageSize, reviews.size());
+        int end = Math.min(start + pageSize, reviewsList.size());
 
-        List<Review> pageReviews = reviews.subList(start, end);
+        List<Review> pageReviewsList = reviewsList.subList(start, end);
 
-        return ReviewResponseDto.of(pageReviews);
+        return ReviewResponseDto.of(pageReviewsList);
     }
 
     @Transactional
