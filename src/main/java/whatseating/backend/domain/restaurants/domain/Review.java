@@ -42,4 +42,9 @@ public class Review extends BaseTimeEntity {
         this.user = user;
         this.restaurants = restaurants;
     }
+
+    public void updateReviews(String content, String star) {
+        this.content = content;
+        this.star = star;
+    }
 }
