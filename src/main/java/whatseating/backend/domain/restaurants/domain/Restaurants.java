@@ -52,7 +52,8 @@ public class Restaurants {
     private List<Review> review = new ArrayList<Review>();
 
     @Builder
-    public Restaurants(String latitude, String longitude, String mainCategory, String menu, String phone, String time, String star, String placeName, String address, String homepageUrl, String imgUrl) {
+    public Restaurants(UUID id, String latitude, String longitude, String mainCategory, String menu, String phone, String time, String star, String placeName, String address, String homepageUrl, String imgUrl) {
+        this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.mainCategory = mainCategory;

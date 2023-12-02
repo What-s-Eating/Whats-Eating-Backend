@@ -23,6 +23,9 @@ public class Review extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private String star;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,8 +35,10 @@ public class Review extends BaseTimeEntity {
     private Restaurants restaurants;
 
     @Builder
-    public Review(String content, User user, Restaurants restaurants) {
+    public Review(UUID id, String content, String star, User user, Restaurants restaurants) {
+        this.id = id;
         this.content = content;
+        this.star = star;
         this.user = user;
         this.restaurants = restaurants;
     }
