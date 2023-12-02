@@ -6,9 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    INTERNAL_SERVER_ERROR(500, "COMMON-001", "서버에 오류가 발생했습니다."),
-    BAD_REQUEST(400, "COMMON-002", "잘못된 요청입니다."),
-
     // User
     USER_INVALID_PASSWORD(403, "USER-001", "비밀번호가 일치하지 않습니다."),
     USER_NOT_FOUND(404, "USER-002", "사용자를 찾을 수 없습니다."),
