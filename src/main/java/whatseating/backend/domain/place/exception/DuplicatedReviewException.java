@@ -1,4 +1,4 @@
-package whatseating.backend.domain.restaurants.exception;
+package whatseating.backend.domain.place.exception;
 
 import whatseating.backend.global.error.exception.ErrorCode;
 import whatseating.backend.global.error.exception.WhatsEatingException;

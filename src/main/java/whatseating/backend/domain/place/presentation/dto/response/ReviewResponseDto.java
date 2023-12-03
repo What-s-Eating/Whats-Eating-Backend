@@ -1,9 +1,9 @@
-package whatseating.backend.domain.restaurants.presentation.dto.response;
+package whatseating.backend.domain.place.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import whatseating.backend.domain.restaurants.domain.Review;
-import whatseating.backend.domain.restaurants.exception.ReviewNotFoundException;
+import whatseating.backend.domain.place.domain.Review;
+import whatseating.backend.domain.place.exception.ReviewNotFoundException;
 
 import java.util.List;
 import java.util.UUID;

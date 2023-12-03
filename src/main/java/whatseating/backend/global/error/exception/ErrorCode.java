@@ -16,8 +16,8 @@ public enum ErrorCode {
     TOKEN_INVALID(401, "TOKEN-001", "유효하지 않은 토큰입니다."),
     TOKEN_EXPIRED(401, "TOKEN-002", "만료된 토큰입니다."),
 
-    // Restaurants
-    RESTAURANTS_NOT_FOUND(404, "RESTAURANTS-001", "식당을 찾을 수 없습니다."),
+    // Place
+    PLACE_NOT_FOUND(404, "PLACE-001", "장소를 찾을 수 없습니다."),
 
     // Reviews
     REVIEWS_NOT_FOUND(404, "REVIEWS-001", "리뷰를 찾을 수 없습니다."),

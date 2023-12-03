@@ -1,4 +1,4 @@
-package whatseating.backend.domain.restaurants.presentation.dto.request;
+package whatseating.backend.domain.place.presentation.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ public class ReviewRequestDto {
     private UUID userId;
 
     @NotNull
-    private UUID restaurantsId;
+    private UUID placeId;
 
     @NotNull(message = "별점을 입력해주세요.")
     @Size(min = 1, max = 5, message = "별점은 1~5 사이만 가능합니다.")

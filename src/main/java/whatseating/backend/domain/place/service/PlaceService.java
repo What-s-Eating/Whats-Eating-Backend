@@ -1,18 +1,18 @@
-package whatseating.backend.domain.restaurants.service;
+package whatseating.backend.domain.place.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import whatseating.backend.domain.restaurants.domain.Review;
-import whatseating.backend.domain.restaurants.domain.Restaurants;
-import whatseating.backend.domain.restaurants.domain.repository.ReviewRepository;
-import whatseating.backend.domain.restaurants.domain.repository.RestaurantsRepository;
-import whatseating.backend.domain.restaurants.exception.DuplicatedReviewException;
-import whatseating.backend.domain.restaurants.exception.RestaurantsNotFoundException;
-import whatseating.backend.domain.restaurants.exception.ReviewNotFoundException;
-import whatseating.backend.domain.restaurants.presentation.dto.request.ReviewRequestDto;
-import whatseating.backend.domain.restaurants.presentation.dto.response.ReviewResponseDto;
-import whatseating.backend.domain.restaurants.presentation.dto.response.RestaurantsResponseDto;
+import whatseating.backend.domain.place.domain.Review;
+import whatseating.backend.domain.place.domain.Place;
+import whatseating.backend.domain.place.domain.repository.ReviewRepository;
+import whatseating.backend.domain.place.domain.repository.PlaceRepository;
+import whatseating.backend.domain.place.exception.DuplicatedReviewException;
+import whatseating.backend.domain.place.exception.PlaceNotFoundException;
+import whatseating.backend.domain.place.exception.ReviewNotFoundException;
+import whatseating.backend.domain.place.presentation.dto.request.ReviewRequestDto;
+import whatseating.backend.domain.place.presentation.dto.response.ReviewResponseDto;
+import whatseating.backend.domain.place.presentation.dto.response.PlaceResponseDto;
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
@@ -22,34 +22,34 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class RestaurantsService {
-    private final RestaurantsRepository restaurantsRepository;
+public class PlaceService {
+    private final PlaceRepository placeRepository;
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<RestaurantsResponseDto> getNearbyRestaurants(String latitude, String longitude) {
-        List<Restaurants> nearbyRestaurants = restaurantsRepository.findByLatitudeAndLongitude(latitude, longitude);
+    public List<PlaceResponseDto> getNearbyPlace(String x, String y) {
+        List<Place> nearbyPlace = placeRepository.findByXAndY(x, y);
 
         // 근처 음식점이 없을 경우
-        if (nearbyRestaurants.isEmpty()) {
-            throw RestaurantsNotFoundException.EXCEPTION;
+        if (nearbyPlace.isEmpty()) {
+            throw PlaceNotFoundException.EXCEPTION;
         }
 
-        return RestaurantsResponseDto.of(nearbyRestaurants);
+        return PlaceResponseDto.of(nearbyPlace);
     }
 
     @Transactional(readOnly = true)
-    public RestaurantsResponseDto getRestaurantInfo(UUID id) {
-        Restaurants restaurants = restaurantsRepository.findById(id)
-                .orElseThrow(() -> RestaurantsNotFoundException.EXCEPTION);
+    public PlaceResponseDto getPlaceInfo(UUID id) {
+        Place place = placeRepository.findById(id)
+                .orElseThrow(() -> PlaceNotFoundException.EXCEPTION);
 
-        return RestaurantsResponseDto.of(restaurants);
+        return PlaceResponseDto.of(place);
     }
 
     @Transactional(readOnly = true)
     public List<ReviewResponseDto> getReviews(UUID id, int page) {
-        List<Review> reviewsList = reviewRepository.findReviewByRestaurantsId(id);
+        List<Review> reviewsList = reviewRepository.findReviewByPlaceId(id);
 
         // 리뷰가 없을 경우
         if (reviewsList.isEmpty()) {
@@ -68,20 +68,20 @@ public class RestaurantsService {
 
     @Transactional
     public void addReviews(ReviewRequestDto dto, UUID id) {
-        Restaurants restaurants = restaurantsRepository.findById(id)
-                .orElseThrow(() -> RestaurantsNotFoundException.EXCEPTION);
+        Place place = placeRepository.findById(id)
+                .orElseThrow(() -> PlaceNotFoundException.EXCEPTION);
 
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
         // 리뷰 중복 확인
-        if (reviewRepository.findReviewByUserIdAndRestaurantsId(dto.getUserId(), id).isPresent()) {
+        if (reviewRepository.findReviewByUserIdAndPlaceId(dto.getUserId(), id).isPresent()) {
             throw DuplicatedReviewException.EXCEPTION;
         }
 
         Review review = Review.builder()
                 .user(user)
-                .restaurants(restaurants)
+                .place(place)
                 .star(dto.getStar())
                 .content(dto.getContent())
                 .build();
@@ -95,7 +95,7 @@ public class RestaurantsService {
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
         // 리뷰가 해당 음식점에 속해있는지 확인
-        if (!review.getRestaurants().getId().equals(id)) {
+        if (!review.getPlace().getId().equals(id)) {
             throw ReviewNotFoundException.EXCEPTION;
         }
 
@@ -109,7 +109,7 @@ public class RestaurantsService {
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
         // 리뷰가 해당 음식점에 속해있는지 확인
-        if (!review.getRestaurants().getId().equals(id)) {
+        if (!review.getPlace().getId().equals(id)) {
             throw ReviewNotFoundException.EXCEPTION;
         }
 

@@ -1,4 +1,4 @@
-package whatseating.backend.domain.restaurants.domain;
+package whatseating.backend.domain.place.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,16 +31,16 @@ public class Review extends BaseTimeEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="restaurants_id")
-    private Restaurants restaurants;
+    @JoinColumn(name="place_id")
+    private Place place;
 
     @Builder
-    public Review(UUID id, String content, String star, User user, Restaurants restaurants) {
+    public Review(UUID id, String content, String star, User user, Place place) {
         this.id = id;
         this.content = content;
         this.star = star;
         this.user = user;
-        this.restaurants = restaurants;
+        this.place = place;
     }
 
     public void updateReviews(String content, String star) {
