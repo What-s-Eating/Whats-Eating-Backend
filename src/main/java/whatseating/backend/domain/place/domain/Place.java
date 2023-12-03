@@ -56,6 +56,7 @@ public class Place {
 
     private String menu;
 
+    @Column(nullable = false)
     private String phone;
 
     private String star;
