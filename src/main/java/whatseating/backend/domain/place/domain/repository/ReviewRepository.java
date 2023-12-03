@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, UUID> {
-    List<Review> findReviewByPlaceId(UUID id);
+public interface ReviewRepository extends JpaRepository<Review, String> {
+    List<Review> findReviewByPlaceId(String id);
 
-    Optional<Review> findReviewByUserIdAndPlaceId(UUID userId, UUID placeId);
+    Optional<Review> findReviewByUserIdAndPlaceId(UUID userId, String placeId);
 }

@@ -18,7 +18,7 @@ public class Review extends BaseTimeEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @Column(name = "review_id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    private String id;
 
     @Column(nullable = false)
     private String content;
@@ -35,7 +35,7 @@ public class Review extends BaseTimeEntity {
     private Place place;
 
     @Builder
-    public Review(UUID id, String content, String star, User user, Place place) {
+    public Review(String id, String content, String star, User user, Place place) {
         this.id = id;
         this.content = content;
         this.star = star;

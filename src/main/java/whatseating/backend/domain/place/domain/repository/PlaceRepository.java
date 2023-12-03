@@ -10,8 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PlaceRepository extends JpaRepository<Place, UUID> {
-    Optional<Place> findById(UUID id);
+public interface PlaceRepository extends JpaRepository<Place, String> {
+    Optional<Place> findById(String id);
 
     List<Place> findByXAndY(@Param("x") String x,
                             @Param("y") String y);

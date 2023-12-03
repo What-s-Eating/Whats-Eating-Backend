@@ -17,6 +17,7 @@ import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.domain.user.user.domain.repository.UserRepository;
 import whatseating.backend.domain.user.user.exception.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +41,7 @@ public class PlaceService {
     }
 
     @Transactional(readOnly = true)
-    public PlaceResponseDto getPlaceInfo(UUID id) {
+    public PlaceResponseDto getPlaceInfo(String id) {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> PlaceNotFoundException.EXCEPTION);
 
@@ -48,12 +49,12 @@ public class PlaceService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewResponseDto> getReviews(UUID id, int page) {
+    public List<ReviewResponseDto> getReviews(String id, int page) {
         List<Review> reviewsList = reviewRepository.findReviewByPlaceId(id);
 
         // 리뷰가 없을 경우
         if (reviewsList.isEmpty()) {
-            throw ReviewNotFoundException.EXCEPTION;
+            return ReviewResponseDto.of(new ArrayList<>());
         }
 
         // 페이징
@@ -67,7 +68,7 @@ public class PlaceService {
     }
 
     @Transactional
-    public void addReviews(ReviewRequestDto dto, UUID id) {
+    public void addReviews(ReviewRequestDto dto, String id) {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> PlaceNotFoundException.EXCEPTION);
 
@@ -90,7 +91,7 @@ public class PlaceService {
     }
 
     @Transactional
-    public void updateReviews(ReviewRequestDto dto, UUID id, UUID review_id) {
+    public void updateReviews(ReviewRequestDto dto, String id, String review_id) {
         Review review = reviewRepository.findById(review_id)
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
@@ -104,7 +105,7 @@ public class PlaceService {
     }
 
     @Transactional
-    public void deleteReviews(UUID id, UUID review_id) {
+    public void deleteReviews(String id, String review_id) {
         Review review = reviewRepository.findById(review_id)
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 

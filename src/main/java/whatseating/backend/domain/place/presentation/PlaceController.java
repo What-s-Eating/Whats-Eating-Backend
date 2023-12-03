@@ -23,27 +23,27 @@ public class PlaceController {
     }
 
     @GetMapping("/{id}")
-    public PlaceResponseDto getPlaceInfo(@PathVariable UUID id) {
+    public PlaceResponseDto getPlaceInfo(@PathVariable String id) {
         return placeService.getPlaceInfo(id);
     }
 
     @GetMapping("/{id}/reviews")
-    public List<ReviewResponseDto> getReviews(@PathVariable UUID id, @RequestParam(defaultValue = "1") int page) {
+    public List<ReviewResponseDto> getReviews(@PathVariable String id, @RequestParam(defaultValue = "1") int page) {
         return placeService.getReviews(id, page);
     }
 
     @PostMapping("/{id}/reviews")
-    public void addReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable UUID id) {
+    public void addReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id) {
         placeService.addReviews(dto, id);
     }
 
     @PutMapping("/{id}/reviews/{review_id}")
-    public void updateReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable UUID id, @PathVariable UUID review_id) {
+    public void updateReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id, @PathVariable String review_id) {
         placeService.updateReviews(dto, id, review_id);
     }
 
     @DeleteMapping("/{id}/reviews/{review_id}")
-    public void deleteReviews(@PathVariable UUID id, @PathVariable UUID review_id) {
+    public void deleteReviews(@PathVariable String id, @PathVariable String review_id) {
         placeService.deleteReviews(id, review_id);
     }
 }

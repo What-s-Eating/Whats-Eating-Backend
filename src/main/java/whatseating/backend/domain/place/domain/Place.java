@@ -18,7 +18,7 @@ public class Place {
     @Id
     @GeneratedValue(generator = "uuid2")
     @Column(name = "place_id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    private String id;
 
     @Column(nullable = false)
     private String place_name;
@@ -67,7 +67,7 @@ public class Place {
     private List<Review> review = new ArrayList<Review>();
 
     @Builder
-    public Place(UUID id, String place_name, String category_name, String category_group_code, String category_group_name, String address_name, String road_address_name, String x, String y, String place_url, String distance, String homepage_url, String img_url, String menu, String phone, String star, String time, List<Review> review) {
+    public Place(String id, String place_name, String category_name, String category_group_code, String category_group_name, String address_name, String road_address_name, String x, String y, String place_url, String distance, String homepage_url, String img_url, String menu, String phone, String star, String time, List<Review> review) {
         this.id = id;
         this.place_name = place_name;
         this.category_name = category_name;

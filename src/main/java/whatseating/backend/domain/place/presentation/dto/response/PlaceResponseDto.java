@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 public class PlaceResponseDto {
-    private UUID id;
+    private String id;
     private String place_name;
     private String category_name;
     private String category_group_code;
