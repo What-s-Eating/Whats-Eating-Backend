@@ -10,6 +10,7 @@ import whatseating.backend.domain.place.domain.repository.PlaceRepository;
 import whatseating.backend.domain.place.exception.DuplicatedReviewException;
 import whatseating.backend.domain.place.exception.PlaceNotFoundException;
 import whatseating.backend.domain.place.exception.ReviewNotFoundException;
+import whatseating.backend.domain.place.exception.UnauthenticatedException;
 import whatseating.backend.domain.place.presentation.dto.request.ReviewRequestDto;
 import whatseating.backend.domain.place.presentation.dto.response.ReviewResponseDto;
 import whatseating.backend.domain.place.presentation.dto.response.PlaceResponseDto;
@@ -68,15 +69,15 @@ public class PlaceService {
     }
 
     @Transactional
-    public void addReviews(ReviewRequestDto dto, String id) {
+    public void addReviews(ReviewRequestDto dto, String id, UUID userId) {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> PlaceNotFoundException.EXCEPTION);
 
-        User user = userRepository.findById(dto.getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
         // 리뷰 중복 확인
-        if (reviewRepository.findReviewByUserIdAndPlaceId(dto.getUserId(), id).isPresent()) {
+        if (reviewRepository.findReviewByUserIdAndPlaceId(userId, id).isPresent()) {
             throw DuplicatedReviewException.EXCEPTION;
         }
 
@@ -91,7 +92,7 @@ public class PlaceService {
     }
 
     @Transactional
-    public void updateReviews(ReviewRequestDto dto, String id, String review_id) {
+    public void updateReviews(ReviewRequestDto dto, String id, String review_id, UUID userId) {
         Review review = reviewRepository.findById(review_id)
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
@@ -100,18 +101,26 @@ public class PlaceService {
             throw ReviewNotFoundException.EXCEPTION;
         }
 
+        if (!review.getUser().getId().equals(userId)) {
+            throw UnauthenticatedException.EXCEPTION;
+        }
+
         review.updateReviews(dto.getContent(), dto.getStar());
         reviewRepository.save(review);
     }
 
     @Transactional
-    public void deleteReviews(String id, String review_id) {
+    public void deleteReviews(String id, String review_id, UUID userId) {
         Review review = reviewRepository.findById(review_id)
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
         // 리뷰가 해당 음식점에 속해있는지 확인
         if (!review.getPlace().getId().equals(id)) {
             throw ReviewNotFoundException.EXCEPTION;
+        }
+
+        if (!review.getUser().getId().equals(userId)) {
+            throw UnauthenticatedException.EXCEPTION;
         }
 
         reviewRepository.deleteById(review_id);

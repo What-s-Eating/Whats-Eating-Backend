@@ -7,6 +7,7 @@ import whatseating.backend.domain.place.presentation.dto.request.ReviewRequestDt
 import whatseating.backend.domain.place.presentation.dto.response.PlaceResponseDto;
 import whatseating.backend.domain.place.presentation.dto.response.ReviewResponseDto;
 import whatseating.backend.domain.place.service.PlaceService;
+import whatseating.backend.global.config.resolver.UserId;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,17 +34,17 @@ public class PlaceController {
     }
 
     @PostMapping("/{id}/reviews")
-    public void addReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id) {
-        placeService.addReviews(dto, id);
+    public void addReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id, @UserId UUID userId) {
+        placeService.addReviews(dto, id, userId);
     }
 
     @PutMapping("/{id}/reviews/{review_id}")
-    public void updateReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id, @PathVariable String review_id) {
-        placeService.updateReviews(dto, id, review_id);
+    public void updateReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id, @PathVariable String review_id, @UserId UUID userId) {
+        placeService.updateReviews(dto, id, review_id, userId);
     }
 
     @DeleteMapping("/{id}/reviews/{review_id}")
-    public void deleteReviews(@PathVariable String id, @PathVariable String review_id) {
-        placeService.deleteReviews(id, review_id);
+    public void deleteReviews(@PathVariable String id, @PathVariable String review_id, @UserId UUID userId) {
+        placeService.deleteReviews(id, review_id, userId);
     }
 }

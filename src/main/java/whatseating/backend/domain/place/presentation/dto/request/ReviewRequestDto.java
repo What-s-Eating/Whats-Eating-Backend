@@ -11,11 +11,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewRequestDto {
-    @NotNull
-    private UUID userId;
-
-    @NotNull
-    private UUID placeId;
 
     @NotNull(message = "별점을 입력해주세요.")
     @Size(min = 1, max = 5, message = "별점은 1~5 사이만 가능합니다.")
