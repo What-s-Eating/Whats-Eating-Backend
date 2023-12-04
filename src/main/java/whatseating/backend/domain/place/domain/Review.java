@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.global.entity.BaseTimeEntity;
 
-import java.util.UUID;
-
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity

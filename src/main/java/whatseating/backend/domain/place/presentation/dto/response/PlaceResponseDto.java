@@ -6,7 +6,6 @@ import whatseating.backend.domain.place.domain.Place;
 import whatseating.backend.domain.place.exception.PlaceNotFoundException;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter

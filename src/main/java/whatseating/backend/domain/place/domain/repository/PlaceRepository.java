@@ -7,7 +7,6 @@ import whatseating.backend.domain.place.domain.Place;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, String> {
