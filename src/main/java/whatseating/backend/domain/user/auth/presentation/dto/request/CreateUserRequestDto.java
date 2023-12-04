@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import whatseating.backend.domain.user.user.domain.User;
-import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 
 @Getter
@@ -31,8 +30,7 @@ public class CreateUserRequestDto {
                 .name(name)
                 .email(email)
                 .password(password)
-                .role(Role.USER)
-                .provider(Provider.EMAIL)
+//                .role(Role.USER)
                 .build();
     }
 }

@@ -39,18 +39,13 @@ public class PlaceResponseDto {
                 .category_name(place.getCategory_name())
                 .category_group_code(place.getCategory_group_code())
                 .category_group_name(place.getCategory_group_name())
+                .phone(place.getPhone())
                 .address_name(place.getAddress_name())
                 .road_address_name(place.getRoad_address_name())
                 .x(place.getX())
                 .y(place.getY())
                 .place_url(place.getPlace_url())
                 .distance(place.getDistance())
-                .homepage_url(place.getHomepage_url())
-                .img_url(place.getImg_url())
-                .menu(place.getMenu())
-                .phone(place.getPhone())
-                .star(place.getStar())
-                .time(place.getTime())
                 .build();
     }
 

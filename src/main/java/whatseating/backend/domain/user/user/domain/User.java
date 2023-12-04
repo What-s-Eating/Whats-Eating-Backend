@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 import whatseating.backend.global.entity.BaseTimeEntity;
 
@@ -37,23 +36,18 @@ public class User extends BaseTimeEntity {
     @Column
     private String profileImage;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Provider provider;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private Role role;
 
     @Builder
-    public User(UUID id, String name, String email, String password, String profileImage, Provider provider, Role role) {
+    public User(UUID id, String name, String email, String password, String profileImage) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.profileImage = profileImage;
-        this.provider = provider;
-        this.role = role;
+//        this.role = role;
     }
 
     public void updateName(String name) {
