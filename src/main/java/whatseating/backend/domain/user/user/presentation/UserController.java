@@ -19,27 +19,27 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/me")
-    public UserResponseDto getUserInfo(@UserId UUID id) {
+    public UserResponseDto getUserInfo(@UserId String id) {
         return userService.getUserInfo(id);
     }
 
     @PutMapping("/name")
-    public void updateUserName(@RequestBody @Valid UpdateNameRequestDto dto, @UserId UUID id) {
+    public void updateUserName(@RequestBody @Valid UpdateNameRequestDto dto, @UserId String id) {
         userService.updateUserName(dto, id);
     }
 
     @PutMapping("/password")
-    public void updateUserPassword(@RequestBody @Valid UpdatePasswordRequestDto dto, @UserId UUID id) {
+    public void updateUserPassword(@RequestBody @Valid UpdatePasswordRequestDto dto, @UserId String id) {
         userService.updateUserPassword(dto, id);
     }
 
     @PutMapping("/profile-img")
-    public void updateUserProfileImg(@RequestParam String profileImage, @UserId UUID id) {
+    public void updateUserProfileImg(@RequestParam String profileImage, @UserId String id) {
         userService.updateUserProfileImage(profileImage, id);
     }
 
     @DeleteMapping
-    public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, @UserId UUID id) {
+    public void deleteUser(@RequestBody @Valid DeleteUserRequestDto dto, @UserId String id) {
         userService.deleteUser(dto, id);
     }
 }

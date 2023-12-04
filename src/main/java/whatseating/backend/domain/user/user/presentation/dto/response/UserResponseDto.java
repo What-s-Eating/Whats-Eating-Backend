@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Builder
 public class UserResponseDto {
-    private UUID id;
+    private String id;
     private String name;
     private String email;
     private String profileImage;

@@ -21,7 +21,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(UserId.class) && UUID.class.equals(parameter.getParameterType());
+        return parameter.hasParameterAnnotation(UserId.class);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
             throw InvalidTokenException.EXCEPTION;
         }
 
-        final UUID userId = jwtTokenProvider.getUUID(token);
+        final String userId = jwtTokenProvider.getUserId(token);
 
         try {
             return userId;

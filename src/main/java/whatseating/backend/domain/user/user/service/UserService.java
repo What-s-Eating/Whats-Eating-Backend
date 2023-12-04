@@ -24,7 +24,7 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public UserResponseDto getUserInfo(UUID id) {
+    public UserResponseDto getUserInfo(String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
@@ -32,7 +32,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserName(UpdateNameRequestDto dto, UUID id) {
+    public void updateUserName(UpdateNameRequestDto dto, String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
@@ -46,7 +46,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserPassword(UpdatePasswordRequestDto dto, UUID id) {
+    public void updateUserPassword(UpdatePasswordRequestDto dto, String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
@@ -60,7 +60,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserProfileImage(String profileImage, UUID id) {
+    public void updateUserProfileImage(String profileImage, String id) {
         // TODO: 나중에 S3로 변경
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
@@ -70,7 +70,7 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(DeleteUserRequestDto dto, UUID id) {
+    public void deleteUser(DeleteUserRequestDto dto, String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 

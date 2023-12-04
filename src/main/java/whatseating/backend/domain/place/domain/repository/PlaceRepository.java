@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, String> {
+    @Override
     Optional<Place> findById(String id);
 
     List<Place> findByXAndY(@Param("x") String x,

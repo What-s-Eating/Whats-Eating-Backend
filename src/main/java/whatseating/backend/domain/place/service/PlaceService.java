@@ -51,7 +51,7 @@ public class PlaceService {
 
     @Transactional(readOnly = true)
     public List<ReviewResponseDto> getReviews(String id, int page) {
-        List<Review> reviewsList = reviewRepository.findReviewByPlaceId(id);
+        List<Review> reviewsList = reviewRepository.findReviewByPlaceIdOrderByCreatedAtDesc(id);
 
         // 리뷰가 없을 경우
         if (reviewsList.isEmpty()) {
@@ -69,21 +69,23 @@ public class PlaceService {
     }
 
     @Transactional
-    public void addReviews(ReviewRequestDto dto, String id, UUID userId) {
+    public void addReviews(ReviewRequestDto dto, String id, String userId) {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> PlaceNotFoundException.EXCEPTION);
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
+        System.out.print(place.toString());
+        System.out.print(user.toString());
         // 리뷰 중복 확인
         if (reviewRepository.findReviewByUserIdAndPlaceId(userId, id).isPresent()) {
             throw DuplicatedReviewException.EXCEPTION;
         }
 
         Review review = Review.builder()
-                .user(user)
                 .place(place)
+                .user(user)
                 .star(dto.getStar())
                 .content(dto.getContent())
                 .build();

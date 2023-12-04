@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Builder
 public class ReviewResponseDto {
     private String id;
-    private UUID userId;
+    private String userId;
     private String userName;
     private String imgUrl;
     private String star;

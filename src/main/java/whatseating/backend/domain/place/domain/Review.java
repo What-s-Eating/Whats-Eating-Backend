@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import whatseating.backend.domain.user.user.domain.User;
 import whatseating.backend.global.entity.BaseTimeEntity;
 
@@ -14,8 +15,8 @@ import whatseating.backend.global.entity.BaseTimeEntity;
 @Table(name = "review")
 public class Review extends BaseTimeEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "review_id", columnDefinition = "BINARY(16)")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     @Column(nullable = false)
@@ -24,12 +25,12 @@ public class Review extends BaseTimeEntity {
     @Column(nullable = false)
     private String star;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name="place_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="place_id", referencedColumnName = "id")
     private Place place;
 
     @Builder

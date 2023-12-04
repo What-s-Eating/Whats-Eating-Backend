@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import whatseating.backend.domain.user.user.domain.enums.Provider;
 import whatseating.backend.domain.user.user.domain.enums.Role;
 import whatseating.backend.global.entity.BaseTimeEntity;
@@ -18,9 +19,9 @@ import java.util.UUID;
 @Table(name = "user")
 public class User extends BaseTimeEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "user_id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
     @Size(min = 2, max = 20)
     @Column(nullable = false)
@@ -46,7 +47,7 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public User(UUID id, String name, String email, String password, String profileImage, Provider provider, Role role) {
+    public User(String id, String name, String email, String password, String profileImage, Provider provider, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;

@@ -34,7 +34,7 @@ public class PlaceController {
     }
 
     @PostMapping("/{id}/reviews")
-    public void addReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id, @UserId UUID userId) {
+    public void addReviews(@RequestBody @Valid ReviewRequestDto dto, @PathVariable String id, @UserId String userId) {
         placeService.addReviews(dto, id, userId);
     }
 

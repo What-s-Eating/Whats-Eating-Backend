@@ -12,5 +12,7 @@ import java.util.UUID;
 public interface ReviewRepository extends JpaRepository<Review, String> {
     List<Review> findReviewByPlaceId(String id);
 
-    Optional<Review> findReviewByUserIdAndPlaceId(UUID userId, String placeId);
+    Optional<Review> findReviewByUserIdAndPlaceId(String userId, String placeId);
+
+    List<Review> findReviewByPlaceIdOrderByCreatedAtDesc(String id);
 }

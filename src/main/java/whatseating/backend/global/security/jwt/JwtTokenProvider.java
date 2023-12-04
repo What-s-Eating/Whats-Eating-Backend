@@ -36,7 +36,7 @@ public class JwtTokenProvider {
 
     public String createToken(User user, long tokenValidTime) {
         Claims claims = Jwts.claims();
-        claims.put("userId", String.valueOf(user.getId()));
+        claims.put("userId", user.getId());
         claims.put("email", user.getEmail());
         Date now = new Date();
 
@@ -83,8 +83,8 @@ public class JwtTokenProvider {
         return extractAllClaims(token).get("email", String.class);
     }
 
-    public UUID getUUID(String token) {
-        return UUID.fromString(extractAllClaims(token)
-                .get("userId", String.class));
+    public String getUserId(String token) {
+        return extractAllClaims(token)
+                .get("userId", String.class);
     }
 }
