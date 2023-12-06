@@ -10,8 +10,6 @@ import whatseating.backend.domain.user.user.presentation.dto.response.UserRespon
 import whatseating.backend.domain.user.user.service.UserService;
 import whatseating.backend.global.config.resolver.UserId;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor

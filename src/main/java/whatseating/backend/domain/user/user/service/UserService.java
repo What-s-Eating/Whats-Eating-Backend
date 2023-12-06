@@ -14,8 +14,6 @@ import whatseating.backend.domain.user.user.presentation.dto.request.UpdateNameR
 import whatseating.backend.domain.user.user.presentation.dto.request.UpdatePasswordRequestDto;
 import whatseating.backend.domain.user.user.presentation.dto.response.UserResponseDto;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
